@@ -16,8 +16,10 @@ int motorB3 = 13;
 int motorA4 = 11;
 int motorB4 = 8;
 
-int grabberA = 5;
-int grabberB = 2;
+int servoPin = 5; 
+
+Servo Servo1;
+
 
 int grabbed = 0;
 
@@ -31,12 +33,8 @@ void setup()
   pinMode(motorA3, OUTPUT);
   pinMode(motorB3, OUTPUT);
   pinMode(motorA4, OUTPUT);
-  pinMode(motorB4, OUTPUT);
-  pinMode(grabberA, OUTPUT);
-  pinMode(grabberB, OUTPUT);
   
-  int grabberA = 1;
-  int grabberB = 2;
+  Servo1.attach(servoPin); 
   
   pinMode(trig, OUTPUT);
   pinMode(echo, INPUT);
@@ -124,30 +122,19 @@ void stopMotors(){
   digitalWrite(motorB4, LOW);
 }
 
-void stopGrabbing(){
-  digitalWrite(grabberA, LOW);
-  digitalWrite(grabberB, LOW);
-}
 
 void grabItem(){
   if(grabbed == 0){
     grabbed = 1;
     // Turn grabber motor to grab item
-    digitalWrite(grabberA, LOW);
-    digitalWrite(grabberB, HIGH);
-    delay(2500);
-    stopGrabbing();
+    Servo1.write(90);
   }
 }
 
 void releaseItem(){
   if(grabbed == 1){
+    Servo1.write(0);
     grabbed = 0;
-    // Turn grabber motor to release item
-    digitalWrite(grabberA, HIGH);
-    digitalWrite(grabberB, LOW);
-    delay(2500);
-    stopGrabbing();
   }
 }
 
